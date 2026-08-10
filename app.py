@@ -14,7 +14,7 @@ def get_average(numbers):
 
 def get_user_age(user_record):
     """Return age from a user record mapping."""
-    return user_record.get("age")
+    return user_record["age"]
 
 
 def find_user(username):

@@ -1,0 +1,1 @@
+# app.py uses only the Python standard library (sqlite3).

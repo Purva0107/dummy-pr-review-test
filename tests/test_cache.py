@@ -1,6 +1,6 @@
 import threading
 
-from app.cache import bump, get_count
+from cache import bump, get_count
 
 
 def test_bump_under_load():

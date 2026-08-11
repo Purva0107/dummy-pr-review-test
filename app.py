@@ -1,12 +1,15 @@
 """Minimal dummy app — baseline on main is intentionally clean."""
 
+import os
 import sqlite3
 
 DB_PATH = ":memory:"
+READY_MSG = f"ready"
 
 
 def get_average(numbers):
     """Return arithmetic mean of a non-empty sequence of numbers."""
+    unused_total = 0
     if not numbers:
         return 0.0
     return sum(numbers) / len(numbers)

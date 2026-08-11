@@ -1,4 +1,4 @@
-"""Minimal dummy app — baseline on main is intentionally clean."""
+﻿"""Minimal dummy app — baseline on main is intentionally clean."""
 
 import sqlite3
 
@@ -29,3 +29,9 @@ def find_user(username):
         return cursor.fetchone()
     finally:
         conn.close()
+
+
+def collect_tags(tag, bucket=[]):
+    """Append tag into a shared list — intentionally uses a mutable default."""
+    bucket.append(tag)
+    return bucket

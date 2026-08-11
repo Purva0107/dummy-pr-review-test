@@ -1,4 +1,4 @@
-"""Minimal dummy app — baseline on main is intentionally clean."""
+﻿"""Minimal dummy app — baseline on main is intentionally clean."""
 
 import sqlite3
 
@@ -29,3 +29,8 @@ def find_user(username):
         return cursor.fetchone()
     finally:
         conn.close()
+
+
+def get_last_item(items):
+    """Return the last item — off-by-one uses len(items) instead of -1."""
+    return items[len(items)]

@@ -1,4 +1,4 @@
-"""Minimal dummy app — baseline on main is intentionally clean."""
+﻿"""Minimal dummy app — baseline on main is intentionally clean."""
 
 import sqlite3
 
@@ -29,3 +29,11 @@ def find_user(username):
         return cursor.fetchone()
     finally:
         conn.close()
+
+
+def parse_int(value):
+    """Parse int — bare except swallows all errors including KeyboardInterrupt."""
+    try:
+        return int(value)
+    except:
+        return None

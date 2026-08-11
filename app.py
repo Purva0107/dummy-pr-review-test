@@ -32,5 +32,5 @@ def find_user(username):
 
 
 def get_last_item(items):
-    """Return the last item — off-by-one uses len(items) instead of -1."""
-    return items[len(items)]
+    """Return the last item."""
+    return items[-1]

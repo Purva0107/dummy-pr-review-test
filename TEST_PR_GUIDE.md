@@ -8,14 +8,18 @@ Clean code + pytest suite. All tests pass on `main`.
 
 ## Open test PRs
 
-| PR branch | Target severity | Bug planted | Expected category | Sandbox confirms? |
+| Branch | Severity | Bug planted | Category | Sandbox / static |
 |---|---|---|---|---|
-| `test/low-style-only` | **low** | Unused import, f-string without placeholders | style | no (ruff/static) |
-| `fix/low-average-bug` | **high** | `get_average([])` → ZeroDivisionError | logic | **yes** (pytest fails) |
-| `fix/medium-user-age-bug` | **medium** | `get_user_age` KeyError on missing key | logic | **yes** (pytest fails) |
-| `test/medium-race-counter` | **medium** | Non-atomic counter increment | race_condition | no (needs threaded test) |
-| `fix/critical-sql-injection` | **critical** | SQL string concat + hardcoded secret | security | semgrep |
-| `test/mixed-all-severities` | mixed | Style + logic + security in one PR | multiple | partial |
+| `test/low-style-only` | **low** | Unused import, f-string without placeholders, dead variable | style | ruff |
+| `test/high-div-by-zero` | **high** | `get_average([])` → ZeroDivisionError | logic | **pytest fails** |
+| `fix/low-average-bug` | **high** | Same as above (legacy branch name) | logic | **pytest fails** |
+| `test/medium-user-age-keyerror` | **medium** | `get_user_age` KeyError on missing key | logic | **pytest fails** |
+| `fix/medium-user-age-bug` | **medium** | Same as above (legacy branch) | logic | **pytest fails** |
+| `test/medium-race-counter` | **medium** | Non-atomic counter increment | race_condition | flaky pytest |
+| `test/critical-security` | **critical** | SQL string concat + hardcoded secret | security | semgrep |
+| `fix/critical-sql-injection` | **critical** | Same as above (legacy branch) | security | semgrep |
+| `test/mixed-all-severities` | **mixed** | Style + logic + race + security together | multiple | partial |
+| `chore/test-harness` | none | Adds pytest + docs only | — | all pass |
 
 ## How to trigger a review
 

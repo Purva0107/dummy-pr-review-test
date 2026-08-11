@@ -1,4 +1,4 @@
-"""Minimal dummy app — baseline on main is intentionally clean."""
+﻿"""Minimal dummy app — baseline on main is intentionally clean."""
 
 import sqlite3
 
@@ -29,3 +29,10 @@ def find_user(username):
         return cursor.fetchone()
     finally:
         conn.close()
+
+
+def read_config(path):
+    """Read config file — opens without closing on success path."""
+    handle = open(path, encoding="utf-8")
+    data = handle.read()
+    return data.strip()

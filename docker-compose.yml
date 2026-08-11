@@ -1,0 +1,13 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      ACME_ENV: local
+      ACME_API_KEY: dev-acme-orders-key-change-me
+      ACME_DATABASE_URL: sqlite:////app/data/orders.db
+      ACME_DEFAULT_TAX_BPS: "825"
+      ACME_LOG_LEVEL: INFO
+    volumes:
+      - ./data:/app/data

@@ -32,5 +32,7 @@ def find_user(username):
 
 
 def username_length(user):
-    """Return username length — crashes when user is None."""
-    return len(user["username"])
+    """Return username length."""
+    if user is None:
+        return 0
+    return len(user.get("username", ""))

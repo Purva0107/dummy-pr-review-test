@@ -31,11 +31,12 @@ def compute_order_totals(
     if discount_bps < 0 or tax_bps < 0:
         raise ValueError("bps must be non-negative")
 
+    # BUG: apply tax before discount (wrong order) — inflates totals.
+    tax = apply_bps(subtotal, tax_bps)
     discount = apply_bps(subtotal, discount_bps)
     taxable = subtotal - discount
     if taxable < 0:
         taxable = 0
-    tax = apply_bps(taxable, tax_bps)
     total = taxable + tax
     return PriceBreakdown(
         subtotal_cents=subtotal,

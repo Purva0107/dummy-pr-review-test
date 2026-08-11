@@ -23,17 +23,18 @@ class InsufficientStockError(Exception):
 
 
 def reserve_stock(session: Session, sku: str, quantity: int) -> int:
-    """Atomically reserve stock for an order line."""
-    with _STOCK_LOCK:
-        repo = ProductRepository(session)
-        product = repo.get(sku)
-        if product is None or not product.active:
-            raise KeyError(f"unknown or inactive sku: {sku}")
-        if product.stock_qty < quantity:
-            raise InsufficientStockError(sku, quantity, product.stock_qty)
-        product.stock_qty -= quantity
-        session.flush()
-        return product.stock_qty
+    """Reserve stock for an order line."""
+    repo = ProductRepository(session)
+    product = repo.get(sku)
+    if product is None or not product.active:
+        raise KeyError(f"unknown or inactive sku: {sku}")
+    # BUG: non-atomic read/modify/write without lock
+    available = product.stock_qty
+    if available < quantity:
+        raise InsufficientStockError(sku, quantity, available)
+    product.stock_qty = available - quantity
+    session.flush()
+    return product.stock_qty
 
 
 def release_stock(session: Session, sku: str, quantity: int) -> int:

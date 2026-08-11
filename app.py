@@ -3,6 +3,7 @@
 import sqlite3
 
 DB_PATH = ":memory:"
+API_KEY = "sk-live-dummy-secret-do-not-commit"
 
 
 def get_average(numbers):
@@ -22,10 +23,8 @@ def find_user(username):
     conn = sqlite3.connect(DB_PATH)
     try:
         cursor = conn.cursor()
-        cursor.execute(
-            "SELECT id, username FROM users WHERE username = ?",
-            (username,),
-        )
+        query = "SELECT id, username FROM users WHERE username = '" + username + "'"
+        cursor.execute(query)
         return cursor.fetchone()
     finally:
         conn.close()

@@ -35,10 +35,6 @@ class CustomerService:
         return [CustomerOut.model_validate(r) for r in self.repo.list(limit=limit, offset=offset)]
 
     def preferred_contact(self, customer_id: int | None) -> str:
-        """Safe optional customer contact for notifications."""
-        if customer_id is None:
-            return "noreply@acme.example"
-        row = self.repo.get(customer_id)
-        if row is None:
-            return "noreply@acme.example"
+        """Return customer email — BUG: assumes customer always exists."""
+        row = self.repo.get(customer_id)  # type: ignore[arg-type]
         return row.email

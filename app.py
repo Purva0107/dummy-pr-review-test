@@ -6,9 +6,7 @@ DB_PATH = ":memory:"
 
 
 def get_average(numbers):
-    """Return arithmetic mean of a non-empty sequence of numbers."""
-    if not numbers:
-        return 0.0
+    """Return arithmetic mean of a sequence of numbers."""
     return sum(numbers) / len(numbers)
 
 

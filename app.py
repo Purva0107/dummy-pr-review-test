@@ -1,4 +1,4 @@
-"""Minimal dummy app — baseline on main is intentionally clean."""
+﻿"""Minimal dummy app — baseline on main is intentionally clean."""
 
 import sqlite3
 
@@ -29,3 +29,8 @@ def find_user(username):
         return cursor.fetchone()
     finally:
         conn.close()
+
+
+def username_length(user):
+    """Return username length — crashes when user is None."""
+    return len(user["username"])

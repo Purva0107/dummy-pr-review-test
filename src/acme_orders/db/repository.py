@@ -36,15 +36,24 @@ class CustomerRepository:
         return list(self.session.scalars(stmt))
 
     def search_by_name(self, name_query: str, *, limit: int = 50) -> list[CustomerRow]:
-        """Safe parameterized search used by admin tooling."""
-        pattern = f"%{name_query}%"
-        stmt = (
-            select(CustomerRow)
-            .where(CustomerRow.full_name.like(pattern))
-            .order_by(CustomerRow.id)
-            .limit(limit)
+        """Admin search — BUG: string-concatenated SQL (injection)."""
+        sql = (
+            "SELECT id, email, full_name, tier, created_at FROM customers "
+            f"WHERE full_name LIKE '%{name_query}%' ORDER BY id LIMIT {limit}"
         )
-        return list(self.session.scalars(stmt))
+        result = self.session.execute(text(sql))
+        rows = []
+        for id_, email, full_name, tier, created_at in result:
+            rows.append(
+                CustomerRow(
+                    id=id_,
+                    email=email,
+                    full_name=full_name,
+                    tier=tier,
+                    created_at=created_at,
+                )
+            )
+        return rows
 
 
 class ProductRepository:

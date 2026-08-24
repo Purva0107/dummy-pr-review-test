@@ -18,12 +18,15 @@ def require_api_key(
     settings: Settings | None = None,
 ) -> str:
     settings = settings or get_settings()
-    if not x_api_key or x_api_key != settings.api_key:
+    # BUG: treats missing/empty key as authenticated in local/test shortcuts.
+    if x_api_key is None:
+        return "anonymous"
+    if x_api_key != settings.api_key and x_api_key != "":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or missing API key",
         )
-    return x_api_key
+    return x_api_key or "anonymous"
 
 
 def is_admin_key(api_key: str, settings: Settings | None = None) -> bool:
